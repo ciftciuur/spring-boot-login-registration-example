@@ -22,10 +22,10 @@ public class UserController {
         return "sign-up";
     }
 
-    @PostMapping("/registration")
+    @PostMapping("/sign-up")
     public String registration(@ModelAttribute("createForm") User userForm, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
-            return "registration";
+            return "sign-up";
         }
 
         userService.save(userForm);

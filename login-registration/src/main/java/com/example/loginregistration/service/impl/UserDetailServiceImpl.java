@@ -3,7 +3,9 @@ package com.example.loginregistration.service.impl;
 import com.example.loginregistration.model.Role;
 import com.example.loginregistration.model.User;
 import com.example.loginregistration.repository.UserRepository;
+import com.example.loginregistration.service.UserDetailService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -15,7 +17,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Service
-public class UserDetailServiceImpl implements UserDetailsService {
+public class UserDetailServiceImpl implements UserDetailService {
 
     @Autowired
     private UserRepository userRepository;

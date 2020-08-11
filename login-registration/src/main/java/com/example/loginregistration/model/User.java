@@ -18,8 +18,6 @@ public class User {
 
     private String lastName;
 
-    @ManyToMany
-    private Set<Role> roles;
 
     public Long getId() {
         return id;
@@ -61,11 +59,4 @@ public class User {
         this.lastName = lastName;
     }
 
-    public Set<Role> getRoles() {
-        return roles;
-    }
-
-    public void setRoles(Set<Role> roles) {
-        this.roles = roles;
-    }
 }

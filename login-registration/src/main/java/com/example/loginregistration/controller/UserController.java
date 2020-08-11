@@ -9,6 +9,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
 public class UserController {
@@ -18,24 +19,22 @@ public class UserController {
 
     @GetMapping("/sign-up")
     public String createNewAccount(Model model) {
-        model.addAttribute("createForm", new User());
+        model.addAttribute("user", new User());
         return "sign-up";
     }
 
     @PostMapping("/sign-up")
-    public String registration(@ModelAttribute("createForm") User userForm, BindingResult bindingResult) {
+    public String registration(@ModelAttribute("user") User user, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             return "sign-up";
         }
-
-        userService.save(userForm);
-
-        userService.autoLogin(userForm.getEmail(), userForm.getPassword());
+        userService.save(user);
+        userService.autoLogin(user.getEmail(), user.getPassword());
 
         return "redirect:/welcome";
     }
 
-    @GetMapping("/sign-in")
+    @RequestMapping("/sign-in")
     public String login() {
         return "sign-in";
     }

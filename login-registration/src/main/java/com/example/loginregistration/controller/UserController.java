@@ -1,21 +1,30 @@
 package com.example.loginregistration.controller;
 
+import com.example.loginregistration.details.CurrentUserDetail;
+import com.example.loginregistration.enums.RoleType;
 import com.example.loginregistration.model.User;
 import com.example.loginregistration.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
+
+import javax.persistence.GeneratedValue;
+import javax.servlet.http.HttpSession;
+import java.util.Date;
 
 @Controller
+@RequestMapping
 public class UserController {
 
     @Autowired
     private UserService userService;
+    @Autowired
+    private BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @GetMapping("/sign-up")
     public String createNewAccount(Model model) {
@@ -28,19 +37,24 @@ public class UserController {
         if (bindingResult.hasErrors()) {
             return "sign-up";
         }
-        userService.save(user);
-        userService.autoLogin(user.getEmail(), user.getPassword());
+        User tempUser = user;
+        tempUser.setRole(RoleType.ROLE_USER);
+        tempUser.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
+        tempUser.setCreatedDate(new Date());
+        userService.save(tempUser);
 
         return "redirect:/welcome";
     }
 
     @RequestMapping("/sign-in")
     public String login() {
+        System.out.println("get map");
         return "sign-in";
     }
 
-    @GetMapping({"/", "/welcome"})
+    @GetMapping("/welcome")
     public String welcome(Model model) {
         return "welcome";
     }
+
 }

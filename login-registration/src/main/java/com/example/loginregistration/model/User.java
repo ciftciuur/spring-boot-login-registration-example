@@ -1,9 +1,12 @@
 package com.example.loginregistration.model;
 
-import javax.persistence.*;
-import java.util.Set;
+import com.example.loginregistration.enums.RoleType;
 
-@Entity(name = "users")
+import javax.persistence.*;
+import java.util.Date;
+
+@Entity
+@Table(name = "users")
 public class User {
 
     @Id
@@ -18,6 +21,26 @@ public class User {
 
     private String lastName;
 
+    private Date createdDate;
+
+    @Enumerated(EnumType.STRING)
+    private RoleType role;
+
+    public RoleType getRole() {
+        return role;
+    }
+
+    public void setRole(RoleType role) {
+        this.role = role;
+    }
+
+    public Date getCreatedDate() {
+        return createdDate;
+    }
+
+    public void setCreatedDate(Date createdDate) {
+        this.createdDate = createdDate;
+    }
 
     public Long getId() {
         return id;

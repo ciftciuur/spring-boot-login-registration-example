@@ -33,16 +33,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
+                .csrf()
+                .disable()
                 .authorizeRequests()
-                .antMatchers("/resources/**", "/sign-up").permitAll()
-                .anyRequest().authenticated()
+                .antMatchers("/**").hasAnyRole("ROLE_USER")
                 .and()
-                .formLogin()
-                .loginPage("/sign-in")
-                .permitAll()
-                .and()
-                .logout()
-                .permitAll();
+                .formLogin().loginPage("/sign-in").permitAll();
+
+
     }
 
     @Bean

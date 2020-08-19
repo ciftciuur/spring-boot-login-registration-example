@@ -1,10 +1,11 @@
 package com.example.loginregistration.service;
 
 import com.example.loginregistration.model.User;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Service;
 
 @Service
-public interface UserService {
+public interface UserService  {
 
     void save(User user);
 

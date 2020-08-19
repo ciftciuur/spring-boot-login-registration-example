@@ -12,6 +12,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 
 import javax.persistence.GeneratedValue;
 import javax.servlet.http.HttpSession;
@@ -46,10 +47,15 @@ public class UserController {
         return "redirect:/welcome";
     }
 
-    @RequestMapping("/sign-in")
-    public String login() {
+    @RequestMapping(value = "/sign", method = RequestMethod.GET)
+    public ModelAndView sign(@RequestParam(value = "error", required = false) String error) {
         System.out.println("get map");
-        return "sign-in";
+        ModelAndView view = new ModelAndView();
+        if (error != null)
+            view.setViewName("error");
+        else view.setViewName("sign");
+        return view;
+
     }
 
     @GetMapping("/welcome")
